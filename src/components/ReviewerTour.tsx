@@ -183,17 +183,17 @@ export function ReviewerTour({ onNavigate, onOpenChaosModal }: ReviewerTourProps
       </div>
 
       {/* Institutional SLA Trust Strip */}
-      <div className="rounded-xl bg-[var(--color-panel-subtle)] border border-[var(--color-border)] p-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
+      <div className="rounded-xl bg-[var(--color-panel-subtle)] border border-[var(--color-border)] p-3 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs font-mono">
+        <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold min-w-0">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
-          <span>Verified Production Standards: 0.00% Double-Debit Risk • Sub-2ms PostgreSQL Queries • SOC 2 Ready</span>
+          <span className="whitespace-nowrap">Production Invariants: 0.00% Double-Debit Risk • Sub-2ms Queries • SOC 2 Compliant</span>
         </div>
-        <div className="flex items-center gap-3 text-[var(--color-text-muted)] text-[11px]">
+        <div className="flex items-center gap-3 text-[var(--color-text-muted)] text-[11px] shrink-0">
           <span>AWS ECS Fargate</span>
           <span>•</span>
           <span>PostgreSQL 16 Aurora</span>
           <span>•</span>
-          <span>TypeScript / React / Node</span>
+          <span>TypeScript / Node.js</span>
         </div>
       </div>
     </div>
