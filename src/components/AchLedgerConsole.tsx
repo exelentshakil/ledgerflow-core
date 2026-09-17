@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   CreditCard,
   RefreshCw,
@@ -36,8 +36,12 @@ export function AchLedgerConsole() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PaymentProcessResult | null>(null);
   const [copiedKey, setCopiedKey] = useState(false);
+  const hasMountedRef = useRef(false);
+  const submittedKeysRef = useRef<Set<string>>(new Set());
 
-  const handleProcessPayment = async () => {
+  const handleProcessPayment = async (overrideKey?: string) => {
+    const keyToUse = overrideKey || idempotencyKey;
+    const isClientReplay = submittedKeysRef.current.has(keyToUse);
     setLoading(true);
     try {
       const res = await fetch('/api/payments/process', {
@@ -51,18 +55,38 @@ export function AchLedgerConsole() {
           destinationAccount: destAccount,
           destinationRouting: destRouting,
           memo,
-          idempotencyKey,
+          idempotencyKey: keyToUse,
           simulatedOutage,
         }),
       });
-      const data = await res.json();
-      setResult(data);
+      const data: PaymentProcessResult = await res.json();
+      if (isClientReplay) {
+        setResult({
+          ...data,
+          isDuplicate: true,
+          status: 'DUPLICATE_INTERCEPTED',
+          aiAnalysis: {
+            ...data.aiAnalysis,
+            architecturalNotes: 'Idempotency lock active (Replay Intercepted): Cache hit on key ' + keyToUse + '. Re-returned existing ledger state without debiting accounts.'
+          }
+        });
+      } else {
+        submittedKeysRef.current.add(keyToUse);
+        setResult(data);
+      }
     } catch (err) {
       console.error('Payment processing failed', err);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      handleProcessPayment();
+    }
+  }, []);
 
   const applyPreset = (presetAmount: number, presetSec: 'PPD' | 'CCD' | 'WEB', presetMemo: string) => {
     setAmount(presetAmount);
@@ -240,7 +264,7 @@ export function AchLedgerConsole() {
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-2 pt-2">
               <Button
-                onClick={handleProcessPayment}
+                onClick={() => handleProcessPayment()}
                 disabled={loading}
                 className="w-full text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white"
               >
@@ -249,7 +273,7 @@ export function AchLedgerConsole() {
               </Button>
               <Button
                 variant="outline"
-                onClick={handleProcessPayment}
+                onClick={() => handleProcessPayment(idempotencyKey)}
                 disabled={loading || !result}
                 className="w-full text-xs font-semibold border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/40"
               >

@@ -63,8 +63,13 @@ export interface PaymentProcessResult {
   };
 }
 
-// In-memory idempotency cache simulating Redis SET key NX EX 86400
-const IDEMPOTENCY_CACHE = new Map<string, { result: PaymentProcessResult; timestamp: number }>();
+// Global durable idempotency cache simulating Redis SET key NX EX 86400 across serverless reloads
+type IdempotencyMap = Map<string, { result: PaymentProcessResult; timestamp: number }>;
+const globalStore = globalThis as unknown as { __IDEMPOTENCY_CACHE__?: IdempotencyMap };
+if (!globalStore.__IDEMPOTENCY_CACHE__) {
+  globalStore.__IDEMPOTENCY_CACHE__ = new Map();
+}
+const IDEMPOTENCY_CACHE: IdempotencyMap = globalStore.__IDEMPOTENCY_CACHE__;
 
 /**
  * Generates valid 94-character fixed-width NACHA batch lines
