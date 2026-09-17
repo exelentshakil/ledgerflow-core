@@ -3,8 +3,8 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: 'GearSignal AI • Modular Social-Listening & Lead Discovery MVP',
-  description: 'Enterprise AI social monitoring, opportunity scoring, and human-in-the-loop Slack alert engine for musical gear & marketplace intelligence.',
+  title: 'LedgerFlow Core • Payments & PostgreSQL Engine',
+  description: 'Enterprise fintech payments, double-entry general ledger, NACHA 94-character ACH batch compilation, sub-2ms PostgreSQL query optimization, and AWS ECS queue processing.',
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
         </ThemeProvider>
         {/* Centralized Demo Traffic Tracking Pixel */}
         <img
-          src="https://demo-traffic.vercel.app/api/px?p=gearsignal-ai"
+          src="https://demo-traffic.vercel.app/api/px?p=ledgerflow-core"
           alt=""
           width={1}
           height={1}
