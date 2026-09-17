@@ -80,15 +80,15 @@ Modern fintech platforms processing high-volume transactions face three foundati
 
 ### 4. 30-Day Milestone Execution Schedule (Staff Augmentation / 25–35 Hrs/Wk)
 
-| Milestone | Deliverables | Timeline | Hours | Cost (@ $40/hr) |
+| Milestone | Deliverables | Timeline | Hours | Cost (@ $80/hr) |
 |---|---|---|---|---|
 | **Phase 0** | **Live Prototype Cockpit (ACH + Ledger + Postgres Tuning)** | **Live Now** | **Included** | **$0.00** |
-| **Milestone 1** | Codebase Audit, Schema Ingestion & Vitest CI/CD Harness | Week 1 | 25 Hrs | $1,000.00 |
-| **Milestone 2** | ACH Engine & NACHA 94-Char Batch Compilation | Week 2 | 25 Hrs | $1,000.00 |
-| **Milestone 3** | Double-Entry General Ledger & Distributed Idempotency Locks | Week 3 | 25 Hrs | $1,000.00 |
-| **Milestone 4** | PostgreSQL 16 EXPLAIN Query Tuning & Zero-Downtime Migrations | Week 4 | 25 Hrs | $1,000.00 |
-| **Milestone 5** | AWS ECS Fargate & SQS Worker Fleet Infrastructure & Runbooks | Week 5 | 25 Hrs | $1,000.00 |
-| **Total** | **End-to-End Senior Full-Stack Engineering Engagement** | **Ongoing** | **125 Hrs** | **$40.00/hr Capped** |
+| **Milestone 1** | Codebase Audit, Schema Ingestion & Vitest CI/CD Harness | Week 1 | 25 Hrs | $2,000.00 |
+| **Milestone 2** | ACH Engine & NACHA 94-Char Batch Compilation | Week 2 | 25 Hrs | $2,000.00 |
+| **Milestone 3** | Double-Entry General Ledger & Distributed Idempotency Locks | Week 3 | 25 Hrs | $2,000.00 |
+| **Milestone 4** | PostgreSQL 16 EXPLAIN Query Tuning & Zero-Downtime Migrations | Week 4 | 25 Hrs | $2,000.00 |
+| **Milestone 5** | AWS ECS Fargate & SQS Worker Fleet Infrastructure & Runbooks | Week 5 | 25 Hrs | $2,000.00 |
+| **Total** | **End-to-End Senior Full-Stack Engineering Engagement** | **Ongoing** | **125 Hrs** | **$80.00/hr Capped** |
 
 ---
 

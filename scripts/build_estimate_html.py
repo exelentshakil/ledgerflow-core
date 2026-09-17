@@ -500,7 +500,7 @@ def build_estimate():
     <div class="meta-card">
       <div><strong>Client:</strong> Alexander (Forest Hills, NY • EST Hours)</div>
       <div><strong>Role:</strong> Senior Full-Stack Engineer (Fintech &amp; Payments)</div>
-      <div><strong>Calibrated Rate:</strong> <strong>$40.00/hr USD (30–35 Hrs/Wk Long-Term)</strong></div>
+      <div><strong>Calibrated Rate:</strong> <strong>$80.00/hr USD (30–35 Hrs/Wk Long-Term)</strong></div>
       <div><strong>Live Prototype:</strong> <span class="live-badge">Verified &amp; Operational</span></div>
     </div>
   </div>
@@ -541,7 +541,7 @@ def build_estimate():
           </td>
           <td style="text-align: center; font-weight: 600;">Week 1</td>
           <td style="text-align: center; font-weight: 700; color: #4338ca;">20%</td>
-          <td style="text-align: right; font-weight: 700;">25 Hrs ($1,000)</td>
+          <td style="text-align: right; font-weight: 700;">25 Hrs ($2,000)</td>
         </tr>
         <tr>
           <td class="phase-num">Milestone 2</td>
@@ -551,7 +551,7 @@ def build_estimate():
           </td>
           <td style="text-align: center; font-weight: 600;">Week 2</td>
           <td style="text-align: center; font-weight: 700; color: #4338ca;">20%</td>
-          <td style="text-align: right; font-weight: 700;">25 Hrs ($1,000)</td>
+          <td style="text-align: right; font-weight: 700;">25 Hrs ($2,000)</td>
         </tr>
         <tr>
           <td class="phase-num">Milestone 3</td>
@@ -561,7 +561,7 @@ def build_estimate():
           </td>
           <td style="text-align: center; font-weight: 600;">Week 3</td>
           <td style="text-align: center; font-weight: 700; color: #4338ca;">20%</td>
-          <td style="text-align: right; font-weight: 700;">25 Hrs ($1,000)</td>
+          <td style="text-align: right; font-weight: 700;">25 Hrs ($2,000)</td>
         </tr>
         <tr>
           <td class="phase-num">Milestone 4</td>
@@ -571,7 +571,7 @@ def build_estimate():
           </td>
           <td style="text-align: center; font-weight: 600;">Week 4</td>
           <td style="text-align: center; font-weight: 700; color: #4338ca;">20%</td>
-          <td style="text-align: right; font-weight: 700;">25 Hrs ($1,000)</td>
+          <td style="text-align: right; font-weight: 700;">25 Hrs ($2,000)</td>
         </tr>
         <tr>
           <td class="phase-num">Milestone 5</td>
@@ -581,13 +581,13 @@ def build_estimate():
           </td>
           <td style="text-align: center; font-weight: 600;">Week 5</td>
           <td style="text-align: center; font-weight: 700; color: #4338ca;">20%</td>
-          <td style="text-align: right; font-weight: 700;">25 Hrs ($1,000)</td>
+          <td style="text-align: right; font-weight: 700;">25 Hrs ($2,000)</td>
         </tr>
         <tr class="total-row">
           <td colspan="2" style="font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Total Senior Full-Stack Engineering Engagement (Long-Term / 25–35 Hrs/Wk)</td>
           <td style="text-align: center; font-weight: 800;">Ongoing</td>
           <td style="text-align: center; font-weight: 800;">100%</td>
-          <td style="text-align: right; font-weight: 800; font-family: ui-monospace, monospace; font-size: 9.8px;">$40.00/hr Capped</td>
+          <td style="text-align: right; font-weight: 800; font-family: ui-monospace, monospace; font-size: 9.8px;">$80.00/hr Capped</td>
         </tr>
       </tbody>
     </table>
@@ -639,7 +639,7 @@ def build_estimate():
     <div class="terms-grid">
       <div class="term-col">
         <div class="term-title">Calibrated Rate</div>
-        <div class="term-body"><strong>$40.00/hr USD</strong> for 25–35 hrs/wk. Clean hourly billing aligned with historical senior hires; zero rate hike clauses.</div>
+        <div class="term-body"><strong>$80.00/hr USD</strong> for 25–35 hrs/wk. Clean hourly billing aligned with profile rate and historical senior tech hires; zero rate hike clauses.</div>
       </div>
       <div class="term-col">
         <div class="term-title">AWS Infrastructure</div>
