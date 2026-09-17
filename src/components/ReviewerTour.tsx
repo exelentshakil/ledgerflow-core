@@ -25,8 +25,8 @@ export function ReviewerTour({ onNavigate, onOpenChaosModal }: ReviewerTourProps
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8 shadow-sm space-y-6">
       {/* Top Header Badge & Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--color-border)] pb-6">
-        <div className="space-y-1.5">
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-[var(--color-border)] pb-5">
+        <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
               <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse shrink-0" />
@@ -36,16 +36,16 @@ export function ReviewerTour({ onNavigate, onOpenChaosModal }: ReviewerTourProps
               Senior Full-Stack • Fintech &amp; Payments
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-            LedgerFlow Core • Production Payments &amp; PostgreSQL Ledger Engine
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
+            LedgerFlow Core • Payments &amp; PostgreSQL Engine
           </h1>
-          <p className="text-sm text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
-            Built for enterprise fintech systems: Double-entry ledger invariants (Total Debits = Total Credits), NACHA ACH batch generation, sub-2ms PostgreSQL indexing, and AWS ECS queue processing with Claude AI integration.
+          <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
+            Double-entry ledger invariants, NACHA 94-character ACH batch compilation, sub-2ms PostgreSQL indexing, and AWS ECS queue processing.
           </p>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0 pt-1">
           <Button
             variant="outline"
             size="sm"
