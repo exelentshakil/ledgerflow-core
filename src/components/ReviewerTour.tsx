@@ -24,45 +24,50 @@ interface ReviewerTourProps {
 export function ReviewerTour({ onNavigate, onOpenChaosModal }: ReviewerTourProps) {
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8 shadow-sm space-y-6">
-      {/* Top Header Badge & Title */}
-      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-[var(--color-border)] pb-5">
-        <div className="space-y-2 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-              <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse shrink-0" />
-              Executive Architecture Briefing
-            </span>
-            <span className="text-xs font-mono text-[var(--color-text-muted)]">
-              Senior Full-Stack • Fintech &amp; Payments
-            </span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
-            LedgerFlow Core • Payments &amp; PostgreSQL Engine
-          </h1>
-          <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-            Double-entry ledger invariants, NACHA 94-character ACH batch compilation, sub-2ms PostgreSQL indexing, and AWS ECS queue processing.
-          </p>
+      {/* Top Header: 2-Row Balanced Architecture Bar */}
+      <div className="border-b border-[var(--color-border)] pb-5 space-y-3">
+        {/* Row 1: Status Eyebrows */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+            <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse shrink-0" />
+            Executive Architecture Briefing
+          </span>
+          <span className="text-xs font-mono text-[var(--color-text-muted)]">
+            Senior Full-Stack • Fintech &amp; Payments
+          </span>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2.5 shrink-0 pt-1">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onOpenChaosModal}
-            className="text-xs font-semibold border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/40"
-          >
-            <Flame className="h-3.5 w-3.5 mr-1 text-amber-500" />
-            Chaos &amp; Bank Dropout
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => onNavigate('payments')}
-            className="text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
-          >
-            <Zap className="h-3.5 w-3.5 mr-1" />
-            Test Live ACH Engine
-          </Button>
+        {/* Row 2: Balanced Title & Quick Actions */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="space-y-1 max-w-2xl">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
+              LedgerFlow Core • Payments &amp; PostgreSQL Engine
+            </h1>
+            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
+              Double-entry ledger invariants, NACHA 94-character ACH batch compilation, sub-2ms PostgreSQL indexing, and AWS ECS queue processing.
+            </p>
+          </div>
+
+          {/* Action Controls */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onOpenChaosModal}
+              className="text-xs font-semibold border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/40"
+            >
+              <Flame className="h-3.5 w-3.5 mr-1 text-amber-500" />
+              Chaos &amp; Bank Dropout
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => onNavigate('payments')}
+              className="text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
+            >
+              <Zap className="h-3.5 w-3.5 mr-1" />
+              Test Live ACH Engine
+            </Button>
+          </div>
         </div>
       </div>
 
