@@ -30,6 +30,7 @@ export interface PaymentRequest {
   secCode: 'PPD' | 'CCD' | 'WEB';
   memo: string;
   simulatedOutage?: boolean;
+  aiProvider?: 'OPENAI' | 'GEMINI' | 'AUTO';
 }
 
 export interface NachaRecord {
@@ -163,7 +164,7 @@ export async function processFintechPayment(req: PaymentRequest): Promise<Paymen
   // 4. Generate NACHA Record Lines
   const nachaBatch = generateNachaRecords(req, txId);
 
-  // 5. Dual-Provider AI Architecture & Compliance Analysis
+  // 5. Dual-Provider AI Architecture & Compliance Analysis (OpenAI gpt-4o-mini + Gemini 2.5 Flash)
   let provider: 'OPENAI' | 'GEMINI' | 'DETERMINISTIC_ENGINE' = 'OPENAI';
   let model = 'gpt-4o-mini';
   let compliancePassed = true;
@@ -173,14 +174,9 @@ export async function processFintechPayment(req: PaymentRequest): Promise<Paymen
 
   const openaiKey = process.env.OPENAI_API_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
+  const chosenProvider = req.aiProvider || 'AUTO';
 
-  if (req.simulatedOutage) {
-    provider = 'DETERMINISTIC_ENGINE';
-    model = 'deterministic-fintech-v1';
-    architecturalNotes = `Simulated primary API outage triggered circuit breaker. Deterministic ledger validation executed: Double-entry balanced (${amountCents}c = ${amountCents}c), NACHA format verified, idempotency key locked.`;
-  } else if (openaiKey && !openaiKey.includes('placeholder')) {
-    try {
-      const prompt = `You are a Principal Fintech Systems Architect. Analyze this payment request for compliance, idempotency, and database performance:
+  const prompt = `You are a Principal Fintech Systems Architect. Analyze this payment request for compliance, idempotency, and database performance:
 Amount: $${req.amount} USD
 SEC Code: ${req.secCode}
 Idempotency Key: ${req.idempotencyKey}
@@ -191,50 +187,78 @@ Return a concise 2-sentence technical evaluation confirming:
 1. NACHA compliance and double-entry ledger balance.
 2. PostgreSQL indexing recommendation for high-throughput reconciliation queries.`;
 
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${openaiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: [{ role: 'user', content: prompt }],
-          temperature: 0.2,
-          max_tokens: 150,
-        }),
-      });
+  async function queryOpenAi(): Promise<string> {
+    if (!openaiKey || openaiKey.includes('placeholder')) throw new Error('OpenAI key missing');
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${openaiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.2,
+        max_tokens: 150,
+      }),
+    });
+    if (!res.ok) throw new Error(`OpenAI HTTP ${res.status}`);
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || 'Verified NACHA batch format and balanced double-entry ledger.';
+  }
 
-      if (res.ok) {
-        const data = await res.json();
-        architecturalNotes = data.choices?.[0]?.message?.content || 'Verified NACHA batch format and balanced double-entry ledger.';
+  async function queryGemini(): Promise<string> {
+    if (!geminiKey || geminiKey.includes('placeholder')) throw new Error('Gemini key missing');
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 150, temperature: 0.2 },
+      }),
+    });
+    if (!res.ok) throw new Error(`Gemini HTTP ${res.status}`);
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Verified NACHA batch format and balanced double-entry ledger via Gemini 2.5 Flash.';
+  }
+
+  if (req.simulatedOutage) {
+    provider = 'DETERMINISTIC_ENGINE';
+    model = 'deterministic-fintech-v1';
+    architecturalNotes = `Simulated primary API outage triggered circuit breaker. Deterministic ledger validation executed: Double-entry balanced (${amountCents}c = ${amountCents}c), NACHA format verified, idempotency key locked.`;
+  } else if (chosenProvider === 'GEMINI') {
+    try {
+      architecturalNotes = await queryGemini();
+      provider = 'GEMINI';
+      model = 'gemini-2.5-flash';
+    } catch {
+      try {
+        architecturalNotes = await queryOpenAi();
         provider = 'OPENAI';
         model = 'gpt-4o-mini';
-      } else {
-        throw new Error(`OpenAI HTTP ${res.status}`);
-      }
-    } catch {
-      // Fallback to Gemini or deterministic engine
-      if (geminiKey && !geminiKey.includes('placeholder')) {
-        try {
-          provider = 'GEMINI';
-          model = 'gemini-2.0-flash';
-          architecturalNotes = `Gemini failover verified: NACHA batch header structured according to Rule 5.1; double-entry general ledger debits match credits (${amountCents}c).`;
-        } catch {
-          provider = 'DETERMINISTIC_ENGINE';
-          model = 'deterministic-fintech-v1';
-          architecturalNotes = `Primary and secondary endpoints unavailable. Local engine validated NACHA batch structure and locked idempotency key.`;
-        }
-      } else {
+      } catch {
         provider = 'DETERMINISTIC_ENGINE';
         model = 'deterministic-fintech-v1';
-        architecturalNotes = `NACHA batch structured according to Rule 5.1; double-entry general ledger debits match credits (${amountCents}c = ${amountCents}c). Sub-2ms execution verified.`;
+        architecturalNotes = `Primary endpoints unavailable. Deterministic engine verified double-entry invariants and NACHA batch structure.`;
       }
     }
   } else {
-    provider = 'DETERMINISTIC_ENGINE';
-    model = 'deterministic-fintech-v1';
-    architecturalNotes = `Double-entry invariant verified: debit sum equals credit sum ($${req.amount.toFixed(2)}). NACHA 94-character record integrity valid for FedACH transmission.`;
+    // Default or OPENAI or AUTO
+    try {
+      architecturalNotes = await queryOpenAi();
+      provider = 'OPENAI';
+      model = 'gpt-4o-mini';
+    } catch {
+      try {
+        architecturalNotes = await queryGemini();
+        provider = 'GEMINI';
+        model = 'gemini-2.5-flash';
+      } catch {
+        provider = 'DETERMINISTIC_ENGINE';
+        model = 'deterministic-fintech-v1';
+        architecturalNotes = `Dual-provider AI failover engaged. Deterministic engine verified NACHA batch structure and locked idempotency key (${amountCents}c).`;
+      }
+    }
   }
 
   const result: PaymentProcessResult = {

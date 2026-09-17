@@ -53,9 +53,9 @@ export function PostgresIndexingConsole() {
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm space-y-6">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[var(--color-border)] pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--color-border)] pb-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
             <span className="flex h-6 w-6 items-center justify-center rounded-md bg-indigo-600 text-white shadow-xs">
               <Database className="h-3.5 w-3.5" />
             </span>
@@ -69,10 +69,10 @@ export function PostgresIndexingConsole() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-panel-subtle)] p-1">
+        <div className="flex items-center gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-panel-subtle)] p-1 shrink-0 overflow-x-auto max-w-full">
           <button
             onClick={() => setActiveTab('explain')}
-            className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer whitespace-nowrap shrink-0 ${
               activeTab === 'explain'
                 ? 'bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-2xs border border-[var(--color-border)]'
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -82,7 +82,7 @@ export function PostgresIndexingConsole() {
           </button>
           <button
             onClick={() => setActiveTab('schema')}
-            className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer whitespace-nowrap shrink-0 ${
               activeTab === 'schema'
                 ? 'bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-2xs border border-[var(--color-border)]'
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -92,7 +92,7 @@ export function PostgresIndexingConsole() {
           </button>
           <button
             onClick={() => setActiveTab('migration')}
-            className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer whitespace-nowrap shrink-0 ${
               activeTab === 'migration'
                 ? 'bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-2xs border border-[var(--color-border)]'
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'

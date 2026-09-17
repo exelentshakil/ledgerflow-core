@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
       secCode: body.secCode === 'CCD' || body.secCode === 'WEB' ? body.secCode : 'PPD',
       memo: String(body.memo || 'ACH Settlement Batch'),
       simulatedOutage: Boolean(body.simulatedOutage),
+      aiProvider: body.aiProvider === 'GEMINI' || body.aiProvider === 'OPENAI' ? body.aiProvider : 'AUTO',
     };
 
     const result = await processFintechPayment(params);
